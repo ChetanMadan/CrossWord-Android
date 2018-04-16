@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         String some = "";
+        
         while (some.length() != 6) {
             some = words.get(rand.nextInt(words.size()));
 
