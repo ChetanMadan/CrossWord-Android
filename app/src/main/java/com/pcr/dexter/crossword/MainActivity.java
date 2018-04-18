@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
         String r5 = "" + textviews[5][5].getText();
         String wr5 = "";
         String temp = ""+ textviews[5][2].getText();
-        if(textviews[5][3].getText()==null) {
+        if(textviews[5][2].getText()==null) {
             for (i = 0; i < words.size(); i++) {
                 wr5 = words.get(i);
-                if (Character.toString(w5.charAt(w5.length() - 1)).equalsIgnoreCase(r5) && wr5.length() == 6) {
+                if (Character.toString(wr5.charAt(wr5.length() - 1)).equalsIgnoreCase(r5) && wr5.length() == 6) {
                     break;
-                } else if (Character.toString(w5.charAt(0)).equalsIgnoreCase(r5) && wr5.length() == 5) {
+                } else if (Character.toString(w5.charAt(wr5.length()-1)).equalsIgnoreCase(r5) && wr5.length() == 5) {
                     break;
                 }
                 else if (Character.toString(w5.charAt(wr5.length() - 1)).equalsIgnoreCase(r5) && Character.toString(wr5.charAt(2)).equalsIgnoreCase(temp) && wr5.length() == 4) {
