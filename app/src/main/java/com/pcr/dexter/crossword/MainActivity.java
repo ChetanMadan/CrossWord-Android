@@ -239,14 +239,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        if(toCheck==correctChars){
-            abc.setText("hello");
-        }
-
-
-
-
     }
 
 
@@ -299,14 +291,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String[][] check(View view) {
+    public void check(View view) {
         int i = 0, j = 0;
         for (i = 0; i < 6; i++) {
             for (j = 0; j < 6; j++) {
                 toCheck[i][j] = textviews[i][j].getText().toString();
             }
         }
-        return toCheck;
+
+        if(toCheck==correctChars){
+            textviews[0][0].setText("hello");
+        }
+        else
+            textviews[0][0].setText("hi");
     }
 }
 
