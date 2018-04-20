@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".intro">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f0ffff"/>
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:text="START"
+        android:textSize="40dp"
+        android:textColor="#8E4585"
+        android:background="#f0ffff"
+        android:layout_marginTop="41dp"
+        android:id="@+id/button1"
+        android:onClick="startClicked"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:text="EXIT"
+        android:textSize="40dp"
+        android:textColor="#8E4585"
+        android:background="#f0ffff"
+        android:layout_marginTop="26dp"
+        android:id="@+id/button2"
+        android:onClick="onExit"
+        android:layout_below="@+id/button1"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignStart="@+id/button1" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:src="@drawable/box1"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="3100dp"
+        android:layout_height="70dp"
+        android:text="  CROSSWORD"
+        android:textSize="50dp"
+        android:textColor="#000000"
+        android:background="#f0ffff"
+        android:id="@+id/textView"
+        android:layout_marginTop="21dp"
+        android:fontFamily="serif"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

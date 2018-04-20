@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         c12 = "" + textviews[3][2].getText();
         c22 = "" + textviews[3][5].getText();
 
+
         wr2 = "";
         for (i = 0; i < words.size(); i++) {
             wr2 = words.get(i);
@@ -251,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         for (i = 0; i <= 5; i++) {
             for(j=0;j<=5;j++){
                 String str= ""+textviews[i][j].getText();
-                if(textviews[i][j].getText()==null){
+                if(str==""){
                     textviews[i][j].setBackgroundColor(Color.BLACK);
                   }
             }
@@ -306,4 +307,3 @@ public class MainActivity extends AppCompatActivity {
             textviews[0][0].setText("hi");
     }
 }
-
