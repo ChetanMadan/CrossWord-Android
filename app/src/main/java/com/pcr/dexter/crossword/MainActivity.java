@@ -1,10 +1,13 @@
 package com.pcr.dexter.crossword;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Build;
+
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +22,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MainActivity extends AppCompatActivity {
     public ArrayList<String> words = new ArrayList<>();
 
-    public String[][] correctChars = new String[6][6];
 
-    public String[][] toCheck = new String[6][6];
+
+    public CharSequence[][] correctChars = new CharSequence[6][6];
+    int i;
+    int j;
+
+    public CharSequence[][] toCheck = new CharSequence[6][6];
     private TextView[][] textviews = new TextView[6][6];
     Random rand = new Random();
-
-
 
 
     @Override
@@ -36,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button abc = (Button) findViewById(R.id.button3);
 
 
 
@@ -78,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         textviews[5][5] = (TextView) findViewById(R.id.textView36);
 
 
-
         AssetManager assetManager = getAssets();
         try {
             InputStream inputStream = assetManager.open("words.txt");
@@ -102,13 +106,11 @@ public class MainActivity extends AppCompatActivity {
             startWord = words.get(rand.nextInt(words.size()));
 
         }
+
+
         char[] chStartWord = startWord.toCharArray();
-        int i;
-        int row = rand.nextInt(5);
-        int column = rand.nextInt(5);
-
+        
         setwordVert(0, 0, startWord);
-
 
         String c2 = "" + textviews[0][2].getText();
         String w2 = "";
@@ -128,14 +130,17 @@ public class MainActivity extends AppCompatActivity {
 
         setwordHoriz(0, 2, w2);
 
-
         String c5 = "" + textviews[0][5].getText();
         String w5 = "";
+        int count = 0;
         for (i = 0; i < words.size(); i++) {
             w5 = words.get(i);
-            if (Character.toString(w5.charAt(0)).equalsIgnoreCase(c5) && w5.length() == 6 && w5 != w2) {
+            if (w5.length() == 6 && Character.toString(w5.charAt(0)).equalsIgnoreCase(c5) && w5 != w2) {
                 break;
-            } else if (Character.toString(w5.charAt(0)).equalsIgnoreCase(c5) && w5.length() == 5 && w5 != w2) {
+            } else{
+                count++;
+            }
+            if (count ==14802 && Character.toString(w5.charAt(0)).equalsIgnoreCase(c5) && w5.length() == 5 && w5 != w2) {
                 break;
             }
 
@@ -145,13 +150,14 @@ public class MainActivity extends AppCompatActivity {
         setwordHoriz(0, 5, w5);
 
 
+
         String r5 = "" + textviews[5][5].getText();
         String wr5 = "";
-        String temp = "" + textviews[5][2].getText();
-        if (textviews[5][2].getText() == null) {
+        String temp = textviews[5][2].getText().toString();
+        if (textviews[5][2].getText() == "") {
             for (i = 0; i < words.size(); i++) {
                 wr5 = words.get(i);
-                if (Character.toString(wr5.charAt(wr5.length() - 1)).equalsIgnoreCase(r5) && wr5.length() == 6) {
+                if (wr5.length() == 6 && Character.toString(wr5.charAt(5)).equalsIgnoreCase(textviews[5][5].getText().toString())) {
                     break;
                 } else if (wr5.length() == 5) {
                     break;
@@ -159,14 +165,17 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
-        } else if (textviews[5][2].getText() != null) {
+        } else if (textviews[5][2].getText() != "") {
             for (i = 0; i < words.size(); i++) {
                 wr5 = words.get(i);
-                if (Character.toString(w5.charAt(w5.length() - 1)).equalsIgnoreCase(r5) && Character.toString(wr5.charAt(2)).equalsIgnoreCase(String.valueOf(textviews[5][2].getText())) && wr5.length() == 6) {
+                if (wr5.length() == 6){
+                    if(Character.toString(w5.charAt(5)).equalsIgnoreCase(textviews[5][5].getText().toString()) && Character.toString(wr5.charAt(2)).equalsIgnoreCase(temp)) {
+                        break;
+                    }
+                }
+                  else if (wr5.length() == 5 && Character.toString(wr5.charAt(2)).equalsIgnoreCase(textviews[5][2].getText().toString())) {
                     break;
-                } else if (Character.toString(w5.charAt(w5.length() - 1)).equalsIgnoreCase(r5) && Character.toString(wr5.charAt(2)).equalsIgnoreCase(String.valueOf(textviews[5][2].getText())) && wr5.length() == 5) {
-                    break;
-                } else if (Character.toString(w5.charAt(w5.length() - 1)).equalsIgnoreCase(r5) && Character.toString(wr5.charAt(2)).equalsIgnoreCase(temp) && wr5.length() == 4) {
+                } else if (wr5.length() == 4 && Character.toString(wr5.charAt(2)).equalsIgnoreCase(textviews[5][2].getText().toString())) {
                     break;
                 }
             }
@@ -174,19 +183,27 @@ public class MainActivity extends AppCompatActivity {
         setwordVert(5, 0, wr5);
 
 
+
         String c11 = "" + textviews[5][0].getText();
         String c12 = "" + textviews[0][0].getText();
+
         String wr1 = "";
+
+
         for (i = 0; i < words.size(); i++) {
             wr1 = words.get(i);
             if (wr1.length() == 6 && Character.toString(wr1.charAt(0)).equalsIgnoreCase(c12) && Character.toString(wr1.charAt(5)).equalsIgnoreCase(c11)) {
                 break;
-            } else if (wr1.length() == 6 && Character.toString(wr1.charAt(0)).equalsIgnoreCase(c12)) {
+            } else if (wr1.length() == 5 && Character.toString(wr1.charAt(0)).equalsIgnoreCase(c12)) {
                 break;
             }
 
         }
         setwordHoriz(0, 0, wr1);
+
+
+
+
 
 
         c11 = "" + textviews[1][0].getText();
@@ -226,38 +243,42 @@ public class MainActivity extends AppCompatActivity {
         setwordVert(3, 0, wr2);
 
 
-        fillBlack();
 
 
-        int j = 0;
+
+
         for (i = 0; i < 6; i++) {
             for (j = 0; j < 6; j++) {
-                correctChars[i][j] = textviews[i][j].getText().toString();
+                correctChars[i][j] = textviews[i][j].getText();
             }
         }
 
+        fillBlack();
+
+        remove();
+        remove();
 
 
-
+        checkDiagTrue();
 
     }
-
 
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void fillBlack(){
-        int i=0;
-        int j=0;
+    private void fillBlack() {
+        int i = 0;
+        int j = 0;
         for (i = 0; i <= 5; i++) {
-            for(j=0;j<=5;j++){
-                String str= ""+textviews[i][j].getText();
-                if(str==""){
+            for (j = 0; j <= 5; j++) {
+                String str = "" + textviews[i][j].getText();
+                if (str == "") {
                     textviews[i][j].setBackgroundColor(Color.BLACK);
-                  }
+                }
             }
         }
     }
+
     private void setwordHoriz(int rowStart, int columnStart, String wordToPrint) {
         int i = 0;
 
@@ -280,30 +301,102 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void clicked(View view){
-        int i =0,j=0;
-        for(i=0;i<6;i++){
-            for(j=0;j<6;j++){
-                if(rand.nextBoolean()){
+    public void remove() {
+        int i = 0, j = 0;
+        for (i = 0; i < 6; i++) {
+            for (j = 0; j < 6; j++) {
+                if (rand.nextBoolean()) {
                     textviews[i][j].setText("");
                 }
             }
         }
     }
 
-    public void check(View view) {
-        int i = 0, j = 0;
-        for (i = 0; i < 6; i++) {
-            for (j = 0; j < 6; j++) {
-                toCheck[i][j] = textviews[i][j].getText().toString();
-            }
-        }
+    public void clicked(View view){
+        finish();
+    }
 
-        if(toCheck==correctChars){
-            textviews[0][0].setText("hello");
-        }
-        else
-            textviews[0][0].setText("hi");
+    private void checkDiagTrue() {
+        Button abc = findViewById(R.id.button3);
+
+
+
+            abc.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+
+
+                            int i, j;
+                            for (i = 0; i < 6; i++) {
+                                for (j = 0; j < 6; j++) {
+                                    toCheck[i][j] = textviews[i][j].getText();
+                                }
+                            }
+
+                            int flag = 0;
+                            int row;
+                            int col;
+
+
+                            for(row=0;row<6;row++){
+                                for(col=0;col<6;col++){
+                                    if(correctChars[row][col]==toCheck[row][col]){
+                                        flag++;
+                                    }
+                                }
+
+                            }
+
+
+                            if(flag==36) {
+
+
+                                a_builder.setMessage("YOU WIN!! \n YOUR SCORE IS : "+flag).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                }).setNegativeButton("TRY AGAIN", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+
+                                AlertDialog alert = a_builder.create();
+                                alert.setTitle(("GAME OVER "));
+                                alert.show();
+                            }
+
+                            else if(flag!=36){
+                                a_builder.setMessage("YOU LOSE!! \n YOUR SCORE IS : "+flag).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                }).setNegativeButton("TRY AGAIN", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+
+                                AlertDialog alert = a_builder.create();
+                                alert.setTitle(("Result"));
+                                alert.show();
+
+                            }
+
+
+
+
+                        }
+                    }
+            );
+
     }
 }
